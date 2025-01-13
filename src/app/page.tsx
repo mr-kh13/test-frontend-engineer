@@ -1,18 +1,20 @@
-import { ProductList } from "@/modules/product/components/ProductList";
-import { ProductCard } from "@/modules/product/components/ProductCard";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { getUseProductsQueryKey } from "@/data/useProducts/queryKey";
+import { fetchProducts } from "@/data/useProducts/queryFunctions";
+import { HydrationBoundary } from "@/core/components/QueryClientProvider/Hydrate";
+import ProductsPageContent from "@/modules/product/components/ProductsPageContent";
 
-export default function Home() {
+export default async function Home() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: getUseProductsQueryKey(),
+    queryFn: () => fetchProducts(),
+  });
+
   return (
-    <ProductList>
-      <ProductCard
-        title="Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
-        price="109.95"
-        imageSrc="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-        rating={{
-          rate: 4.7,
-          count: 500,
-        }}
-      />
-    </ProductList>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ProductsPageContent />
+    </HydrationBoundary>
   );
 }

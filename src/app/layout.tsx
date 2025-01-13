@@ -4,6 +4,7 @@ import "./globals.css";
 import clsx from "clsx";
 import { MainLayout } from "@/core/components/MainLayout";
 import { QueryClientProvider } from "@/core/components/QueryClientProvider";
+import { ErrorBoundary } from "@/core/components/ErrorBoundary";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,9 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(inter.variable, "antialiased")}>
-        <QueryClientProvider>
-          <MainLayout>{children}</MainLayout>
-        </QueryClientProvider>
+        <ErrorBoundary>
+          <QueryClientProvider>
+            <MainLayout>{children}</MainLayout>
+          </QueryClientProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

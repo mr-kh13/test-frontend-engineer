@@ -1,5 +1,4 @@
-import { RequestHeaders } from "next/dist/client/components/router-reducer/fetch-server-response";
-import { QueryParams } from "./types";
+import { QueryParams, RequestHeaders } from "./types";
 import { buildUrl } from "./utils";
 
 export async function get<TData>(
