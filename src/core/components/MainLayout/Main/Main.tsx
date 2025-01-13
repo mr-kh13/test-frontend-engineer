@@ -5,5 +5,5 @@ interface Props {
 }
 
 export function Main({ children }: Props) {
-  return <main className="container">{children}</main>;
+  return <main className="w-full flex flex-col py-8 p-4">{children}</main>;
 }
