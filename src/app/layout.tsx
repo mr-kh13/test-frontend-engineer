@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { MainLayout } from "@/core/components/MainLayout";
 import { QueryClientProvider } from "@/core/components/QueryClientProvider";
 import { ErrorBoundary } from "@/core/components/ErrorBoundary";
+import CartProvider from "@/modules/cart/provider/CartProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -26,7 +27,9 @@ export default function RootLayout({
       <body className={clsx(inter.variable, "antialiased")}>
         <ErrorBoundary>
           <QueryClientProvider>
-            <MainLayout>{children}</MainLayout>
+            <CartProvider>
+              <MainLayout>{children}</MainLayout>
+            </CartProvider>
           </QueryClientProvider>
         </ErrorBoundary>
       </body>
