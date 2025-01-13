@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 import { MainLayout } from "@/core/components/MainLayout";
+import { QueryClientProvider } from "@/core/components/QueryClientProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(inter.variable, "antialiased")}>
-        <MainLayout>{children}</MainLayout>
+        <QueryClientProvider>
+          <MainLayout>{children}</MainLayout>
+        </QueryClientProvider>
       </body>
     </html>
   );
