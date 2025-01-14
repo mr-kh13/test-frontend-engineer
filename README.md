@@ -1,134 +1,85 @@
-# Frontend Developer Take-Home Test
-
-## Overview
-
-Develop a responsive e-commerce web application that allows users to browse products, view product details, and add products to a shopping cart.
-The application should integrate with a backend API to fetch product data.
-
-- The goal is a clear demonstration of quality, functionality, and thought process.
-- **Timebox:** The test is designed to be completed in 6 hours or less.
-- **Commit Often:** Show your working process through regular commits.
-- **External dependencies:** Use any external dependencies you see fit, you do not need to implement everything from scratch.
-- **Keep It Minimal:** Use lightweight libraries and avoid adding unnecessary features, or over-engineering the solution.
-
-## Requirements
-
-### Functional
-
-1. **Product Listing Page**
-    - Display a list of products with images, names, and prices.
-    - Implement pagination or infinite scrolling.
-
-2. **Product Detail Page**
-    - Show detailed information about the selected product.
-    - Include an "Add to Cart" button.
-
-3. **Shopping Cart**
-    - Allow users to view products added to their cart.
-    - Display the total price and quantity of items.
-    - Enable users to remove items from the cart.
-
-4. **Responsive Design**
-    - Ensure the application is usable on desktop, tablet, and mobile devices.
-
-### Technical
-
-- **Frameworks & Libraries**
-    - **Next.js** with **TypeScript**.
-    - Style components using **Tailwind CSS**.
-
-- **State Management**
-    - Manage application state efficiently.
-
-- **TypeScript**
-    - Use TypeScript for type-checking and code quality.
-    - 
-- **API Integration**
-    - Fetch data from a provided RESTful API endpoint.
-    - Handle loading states and error handling gracefully.
-    - API should be typed using TypeScript.
-
-- **Code Quality**
-    - Apply **SOLID principles** and design patterns.
-    - Write consistent, clean, maintainable, and scalable code.
-    - Create universal and reusable UI components.
-
-- **Testing**
-    - Write unit tests for critical components (optional).
+# Project README
 
 ## Getting Started
 
-1. **Fork this Repository**
-    - You can start by forking this repository.
+Follow these steps to run the application:
 
-2. **Setup Project**
-    - Initialize a new Next.js project with TypeScript.
-    - Install Tailwind CSS and configure it.
+1. **Clone the Repository:**
 
-3. **API Endpoint**
-    - Use a mock API for product data such as [Fake Store API](https://fakestoreapi.com/).
+   ```bash
+   git clone https://github.com/mr-kh13/test-frontend-engineer.git
+   cd ./test-frontend-engineer
+   ```
 
-4. **Development**
-    - Follow the requirements to build the application.
-    - Ensure the application builds and runs without errors.
+2. **Install Dependencies:**
+   This project uses `pnpm` as the package manager. Install dependencies by running:
 
-## Submission Guidelines
+   ```bash
+   pnpm install
+   ```
 
-- **Repository**
-    - Push your code to a **public GitHub repository**.
-    - Ensure the repository has a clear commit history, and commit regularly.
-    - Ensure the repository is a fork of this repository.
+3. **Run the Development Server:**
+   Start the application in development mode:
 
-- **README File**
-    - Include instructions on how to run your application.
-    - Describe your thought process and any architectural decisions.
-    - Mention any trade-offs or assumptions made during development.
+   ```bash
+   pnpm dev
+   ```
 
-- **Deployment**
-    - (Optional) Deploy your application using services like **Vercel**.
-    - Provide a link to the live application if deployed.
+   Open [http://localhost:3000](http://localhost:3000) to view the application in the browser.
 
-- **Submission**
-    - Email us the link to your GitHub repository (and live demo if available) at [sam.thompson@playa3ull.games].
+4. **Build for Production:**
+   To create an optimized production build:
+   ```bash
+   pnpm build
+   ```
+   To preview the production build:
+   ```bash
+   pnpm start
+   ```
 
-## Evaluation Criteria
+---
 
-- **Functionality**
-    - Does the application meet all the functional requirements?
+## Thought Process and Architectural Decisions
 
-- **Code Quality**
-    - Is the code clean, well-organized, and maintainable?
-    - Are SOLID principles and design patterns appropriately applied?
+The application is designed to be scalable and maintainable. The folder structure is as follows:
 
-- **Technical Skills**
-    - Effective use of React, TypeScript, and Tailwind CSS.
-    - Proper integration with the backend API.
+### **Folder Structure:**
 
-- **User Experience**
-    - Is the UI responsive and user-friendly?
-    - Does the design consider good UX practices?
+- **core:** Contains core functionalities and critical components/logic essential to the application.
+- **data:** Handles the data layer, including API calls and custom hooks built with React Query.
+- **modules:** Contains application modules organized by domain, ensuring clear separation of concerns.
+- **shared:** Holds shared resources like atomic components, hooks, utilities, etc.
 
-- **Problem-Solving**
-    - How were challenges addressed?
-    - Were creative solutions implemented?
+This organization ensures that the application is easy to scale as features grow and simplifies team collaboration.
 
-- **Documentation**
-    - Clarity of the README file.
-    - Use of comments and documentation within the code.
+---
 
-## Extra Credit
+## Trade-Offs and Assumptions
 
-*These are not required but can showcase your additional skills:*
+### **Cart Functionality:**
 
-- **GraphQL or tRPC**
-    - Use GraphQL or tRPC instead of REST for API interactions.
+- **Current Implementation:**
+  The cart functionality is implemented using React Context.
+- **Reasoning:**
+  Context is a simple and lightweight solution suitable for the current scope of the project. As the project grows, migrating to a more robust state management library like Redux or Zustand can be considered.
 
-- **Monorepo Setup**
-    - Organize your project using a monorepo approach.
+### **API Client:**
 
-- **SEO Enhancements**
-    - Implement SEO optimisation.
+- **Current Implementation:**
+  The `fetch` API is used for making network requests.
+- **Reasoning:**
+  Since this is a simple project, using `fetch` avoids increasing the bundle size. For future iterations, migrating to `axios` is recommended for its advanced features and improved maintainability.
 
-- **E-commerce Features**
-    - Add user authentication.
-    - Implement a checkout process.
+### **Testing:**
+
+- **Current Status:**
+  Testing for critical logic and components like the cart has been deferred due to time constraints.
+- **Recommendation:**
+  Adding unit and integration tests to core functionalities should be prioritized in future development phases.
+
+### **Package Manager:**
+
+- **Choice:**
+  `pnpm` is used as the package manager.
+- **Reasoning:**
+  It optimizes disk space usage and typically offers faster install and build times compared to `npm`.
