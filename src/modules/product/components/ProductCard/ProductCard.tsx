@@ -1,17 +1,19 @@
-import { Button } from "@/shared/components/Button";
 import { Currency } from "@/shared/components/Currency";
 import { Rating } from "@/shared/components/Rating";
 import Image from "next/image";
-import type { MouseEventHandler } from "react";
 import { Rating as RatingType } from "../../types";
+import { AddToCartButton } from "./AddToCartButton";
+import { Price } from "@/shared/components/Price";
 
 interface Props {
   title: string;
   price: number;
+  quantity: number;
   imageSrc: string;
   rating: RatingType;
   onClick: () => void;
-  onAddToCartClick: () => void;
+  onAddClick: () => void;
+  onRemoveClick: () => void;
 }
 
 export function ProductCard({
@@ -19,16 +21,11 @@ export function ProductCard({
   price,
   imageSrc,
   rating,
+  quantity,
   onClick,
-  onAddToCartClick,
+  onAddClick,
+  onRemoveClick,
 }: Props) {
-  const handleAddToCartClick: MouseEventHandler<HTMLButtonElement> = (
-    event
-  ) => {
-    event.stopPropagation();
-    onAddToCartClick();
-  };
-
   const handleClick = () => {
     onClick();
   };
@@ -46,18 +43,17 @@ export function ProductCard({
       <div className="w-full flex align-middle justify-between flex-wrap gap-2 mt-auto">
         <p className="text-lg font-semibold text-gray-900">
           <Currency />
-          {price}
+          <Price>{price}</Price>
         </p>
         <Rating rate={rating?.rate} count={rating?.count} />
       </div>
-      <Button
-        variant="primary"
-        fullWidth
-        className="mt-2"
-        onClick={handleAddToCartClick}
-      >
-        Add To Cart
-      </Button>
+      <div className="mt-2">
+        <AddToCartButton
+          quantity={quantity}
+          onAddClick={onAddClick}
+          onRemoveClick={onRemoveClick}
+        />
+      </div>
     </div>
   );
 }

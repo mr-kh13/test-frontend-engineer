@@ -4,11 +4,12 @@ import { Product } from "../types";
 import Image from "next/image";
 import { Currency } from "@/shared/components/Currency";
 import { Rating } from "@/shared/components/Rating";
-import { Button } from "@/shared/components/Button";
 import Link from "next/link";
 import { ROUTES } from "@/core/constants/routes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons/faChevronLeft";
+import { AddToCartButton } from "./ProductCard/AddToCartButton";
+import { useCart } from "@/modules/cart/provider/CartProvider";
 
 interface Props {
   productId: Product["id"];
@@ -16,6 +17,7 @@ interface Props {
 
 export default function ProductDetailsPageContent({ productId }: Props) {
   const { data: product, isLoading, isError } = useProduct({ productId });
+  const { addToCart, getQuantity, removeFromCart } = useCart();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -26,8 +28,6 @@ export default function ProductDetailsPageContent({ productId }: Props) {
   if (!product) {
     return <div>Product not found.</div>;
   }
-
-  const handleAddToCartClick = () => {};
 
   return (
     <div className="container max-w-3xl mx-auto flex flex-col">
@@ -62,14 +62,11 @@ export default function ProductDetailsPageContent({ productId }: Props) {
             </p>
             <Rating rate={product.rating?.rate} count={product.rating?.count} />
           </div>
-          <Button
-            variant="primary"
-            fullWidth
-            className="mt-2"
-            onClick={handleAddToCartClick}
-          >
-            Add To Cart
-          </Button>
+          <AddToCartButton
+            quantity={getQuantity(productId)}
+            onAddClick={() => addToCart(productId)}
+            onRemoveClick={() => removeFromCart(productId)}
+          />
         </div>
       </div>
     </div>

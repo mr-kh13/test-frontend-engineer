@@ -6,6 +6,7 @@ import { Button } from "@/shared/components/Button";
 import { useProducts } from "@/data/useProducts";
 import { ROUTES } from "@/core/constants/routes";
 import { useRouter } from "next/navigation";
+import { useCart } from "@/modules/cart/provider/CartProvider";
 
 const LIMIT = 10;
 
@@ -13,6 +14,7 @@ export default function ProductsPageContent() {
   const { data: products, isLoading, isError } = useProducts();
   const [page, setPage] = useState(1);
   const router = useRouter();
+  const { addToCart, getQuantity, removeFromCart } = useCart();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -44,10 +46,16 @@ export default function ProductsPageContent() {
             price={product.price}
             imageSrc={product.image}
             rating={product.rating}
+            quantity={getQuantity(product.id)}
             onClick={() => {
               router.push(ROUTES.product.details(product.id));
             }}
-            onAddToCartClick={() => {}}
+            onAddClick={() => {
+              addToCart(product.id);
+            }}
+            onRemoveClick={() => {
+              removeFromCart(product.id);
+            }}
           />
         ))}
       </ProductList>
