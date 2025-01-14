@@ -4,12 +4,21 @@ import {
   type RemoveFromCartAction,
   type EmptyCartAction,
   CartActionType,
+  CartState,
+  SetCartItemsAction,
 } from "./types";
 
-export const addToCart = (product: Product): AddToCartAction => {
+export const setCartItems = (items: CartState["items"]): SetCartItemsAction => {
+  return {
+    type: CartActionType.SetCartItems,
+    payload: { items },
+  };
+};
+
+export const addToCart = (productId: Product["id"]): AddToCartAction => {
   return {
     type: CartActionType.AddToCart,
-    payload: { product },
+    payload: { productId },
   };
 };
 

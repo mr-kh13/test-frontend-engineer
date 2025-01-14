@@ -1,7 +1,7 @@
 import { CartAction, CartState, CartActionType } from "./types";
 
 export const initialState: CartState = {
-  products: [],
+  items: {},
 };
 
 export function cartReducer(
@@ -10,21 +10,40 @@ export function cartReducer(
 ): CartState {
   switch (action.type) {
     case CartActionType.AddToCart: {
+      const newItems = { ...state.items };
+      const { productId } = action.payload;
+
+      if (productId in newItems) {
+        newItems[productId] += 1;
+      } else {
+        newItems[productId] = 1;
+      }
+
       return {
         ...state,
-        products: [...state.products, action.payload.product],
+        items: newItems,
       };
     }
     case CartActionType.RemoveFromCart: {
+      const newItems = { ...state.items };
+      const { productId } = action.payload;
+
+      if (productId in newItems && newItems[productId] > 1) {
+        newItems[productId] -= 1;
+      } else {
+        delete newItems[productId];
+      }
+
       return {
         ...state,
-        products: state.products.filter(
-          (item) => item.id !== action.payload.productId
-        ),
+        items: newItems,
       };
     }
     case CartActionType.EmptyCart: {
-      return { ...state, products: [] };
+      return { ...state, items: [] };
+    }
+    case CartActionType.SetCartItems: {
+      return { ...state, items: action.payload.items };
     }
     default:
       return state;
