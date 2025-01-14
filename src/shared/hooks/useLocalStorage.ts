@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+"use client";
+import { useState, useEffect } from "react";
 
 interface UseLocalStorageOptions<T> {
   key: string;
@@ -15,7 +16,7 @@ export function useLocalStorage<T>(
       const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.error('Error retrieving data from localStorage:', error);
+      console.error("Error retrieving data from localStorage:", error);
       return initialValue;
     }
   });
@@ -24,7 +25,7 @@ export function useLocalStorage<T>(
     try {
       localStorage.setItem(key, JSON.stringify(storedValue));
     } catch (error) {
-      console.error('Error storing data in localStorage:', error);
+      console.error("Error storing data in localStorage:", error);
     }
   }, [storedValue, key]);
 
@@ -32,7 +33,7 @@ export function useLocalStorage<T>(
     try {
       localStorage.removeItem(key);
     } catch (error) {
-      console.error('Error removing data from localStorage:', error);
+      console.error("Error removing data from localStorage:", error);
     }
   };
 
