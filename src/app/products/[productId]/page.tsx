@@ -6,12 +6,15 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+type Params = Promise<{ productId: string }>;
+
 interface Props {
-  params: { productId: string };
+  params: Params;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const product = await fetchProduct({ productId: Number(params.productId) });
+  const productId = await params;
+  const product = await fetchProduct({ productId: Number(productId) });
   return {
     title: `My Shop | ${product.title}`,
     description: `My Shop | ${product.title} `,
@@ -20,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductDetailPage({ params }: Props) {
   const queryClient = new QueryClient();
-  const productId = Number(params.productId);
+  const productId = Number(await params);
 
   await queryClient.prefetchQuery({
     queryKey: getUseProductQueryKey({ productId }),
